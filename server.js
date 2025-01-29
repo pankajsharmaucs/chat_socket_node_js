@@ -15,15 +15,15 @@ app.use(express.static('public'));
 
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, { })
+mongoose.connect(process.env.MONGODB_URI, {})
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.log(err));
 
 // Mongoose Schema 
 const MessageSchema = new mongoose.Schema({
-  username: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now },
+    username: String,
+    message: String,
+    createdAt: { type: Date, default: Date.now },
 });
 
 const Message = mongoose.model('Message', MessageSchema);
@@ -31,24 +31,24 @@ const Message = mongoose.model('Message', MessageSchema);
 
 // Handle Socket Connection
 io.on('connection', (socket) => {
-  console.log('A user connected');
-  
-  // Listen for messages from the client
-  socket.on('sendMessage', async (data) => {
-    // Save message to MongoDB
-    const message = new Message(data);
-    await message.save();
+    console.log('A user connected');
 
-    // Emit the new message to all connected clients
-    io.emit('newMessage', data);
-  });
+    // Listen for messages from the client
+    socket.on('sendMessage', async (data) => {
+        // Save message to MongoDB
+        const message = new Message(data);
+        await message.save();
 
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
+        // Emit the new message to all connected clients
+        io.emit('newMessage', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
+    });
 });
 
-// Start server
-server.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
+const port = process.env.PORT || 3000;  // Use Render's PORT environment variable
+server.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
