@@ -31,7 +31,7 @@ const Message = mongoose.model('Message', MessageSchema);
 
 // Handle Socket Connection
 io.on('connection', (socket) => {
-        console.log('A user has been connected');
+        console.log('A user  connected');
         
         // Fetch old messages when a new user connects
         Message.find().sort({ createdAt: 1 }).limit(50)  // Get the first 50 messages, sorted by creation date
@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
         });
 
         socket.on('disconnect', () => {
-            console.log('A user has been disconnected');
+            console.log('A user  disconnected');
         });
 });
 
