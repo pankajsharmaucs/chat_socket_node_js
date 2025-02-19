@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Realtime Chat</title>
+  <title>Secure Chat</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="/socket.io/socket.io.js"></script>
 </head>
@@ -12,7 +12,7 @@
   <div class="container mt-5">
     <div class="card shadow-sm">
       <div class="card-header bg-primary text-white text-center">
-        <h4>Realtime Chat</h4>
+        <h4>Secure Chat</h4>
       </div>
       <div class="card-body">
         <!-- Username Input Section -->
@@ -40,10 +40,10 @@
   <script>
     const socket = io();  // Establish socket connection to server
 
-    const enterChatButton = document.getElementById('enterChatButton');
-    const usernameInput = document.getElementById('username');
-    const chatSection = document.getElementById('chat-section');
     const usernameSection = document.getElementById('username-section');
+    const enterChatButton = document.getElementById('enterChatButton');
+    const chatSection = document.getElementById('chat-section');
+    const usernameInput = document.getElementById('username');
     const sendButton = document.getElementById('sendButton');
     const messageInput = document.getElementById('message');
     const messagesDiv = document.getElementById('messages');

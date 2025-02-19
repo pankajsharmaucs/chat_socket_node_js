@@ -31,29 +31,29 @@ const Message = mongoose.model('Message', MessageSchema);
 
 // Handle Socket Connection
 io.on('connection', (socket) => {
-    console.log('A user connected');
-    
-    // Fetch old messages when a new user connects
-    Message.find().sort({ createdAt: 1 }).limit(50)  // Get the first 50 messages, sorted by creation date
-        .then(messages => {
-            // Emit old messages to the new user
-            socket.emit('oldMessages', messages);
-        })
-        .catch(err => console.log(err));
+        console.log('A user has been connected');
+        
+        // Fetch old messages when a new user connects
+        Message.find().sort({ createdAt: 1 }).limit(50)  // Get the first 50 messages, sorted by creation date
+            .then(messages => {
+                // Emit old messages to the new user
+                socket.emit('oldMessages', messages);
+            })
+            .catch(err => console.log(err));
 
-    // Listen for messages from the client
-    socket.on('sendMessage', async (data) => {
-        // Save message to MongoDB
-        const message = new Message(data);
-        await message.save();
+        // Listen for messages from the client
+        socket.on('sendMessage', async (data) => {
+            // Save message to MongoDB
+            const message = new Message(data);
+            await message.save();
 
-        // Emit the new message to all connected clients
-        io.emit('newMessage', data);
-    });
+            // Emit the new message to all connected clients
+            io.emit('newMessage', data);
+        });
 
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
-    });
+        socket.on('disconnect', () => {
+            console.log('A user has been disconnected');
+        });
 });
 
 const port = process.env.PORT || 3000;
